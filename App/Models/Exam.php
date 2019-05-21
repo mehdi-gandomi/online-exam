@@ -6,11 +6,14 @@ use \PDO;
 
 class Exam extends Model
 {
-    public static function all()
+    public static function all($userId=null)
     {
         try{
             $db=static::getDB();
             $sql="SELECT exams.id,exams.study_field_id,exams.name,exams.is_disabled,exams.question_count,exams.has_negative_mark,exams.negative_mark_count,exams.exam_time,exams.exam_mark,exams.exam_coefficient,exams.create_date_persian,study_fields.title AS study_field FROM exams INNER JOIN study_fields ON study_fields.id = exams.study_field_id";
+            if ($userId){
+                $sql.=" WHERE exams.id NOT IN (SELECT exam_id FROM exam_results WHERE user_id = '$userId')";
+            }
             $result=$db->query($sql);
             return $result ? $result->fetchAll(PDO::FETCH_ASSOC):[];
         }catch (\Exception $e){

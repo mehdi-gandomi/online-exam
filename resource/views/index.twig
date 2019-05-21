@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>سیستم آزمون آنلاین</title>
+    <style>
+        @font-face {
+            font-family: IRANSans;
+            font-style: normal;
+            font-weight: 500;
+            src: url('/public/fonts/Iransans/eot/IRANSansWeb(FaNum)_Medium.eot');
+            src: url('/public/fonts/Iransans/eot/IRANSansWeb(FaNum)_Medium.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+            url('/public/fonts/Iransans/woff2/IRANSansWeb(FaNum)_Medium.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+            url('/public/fonts/Iransans/woff/IRANSansWeb(FaNum)_Medium.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url('/public/fonts/Iransans/ttf/IRANSansWeb(FaNum)_Medium.ttf') format('truetype');
+        }
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            font-family: IranSans,Tahoma;
+            min-height: 100vh;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e4e5e6;
+        }
+        .main{
+            background-color: #fff;
+            padding: 2rem;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .btn{
+            display: inline-block;
+            font-weight: 400;
+            color: #23282c;
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            -webkit-transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,-webkit-box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,-webkit-box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out,-webkit-box-shadow 0.15s ease-in-out;
+            text-decoration: none;
+        }
+        .btn.btn-primary{
+            color: #fff;
+            background-color: #1985ac;
+            border-color: #187da0;
+        }
+        .btn.btn-primary:hover{
+            color: #fff;
+            background-color: #1b8eb7;
+            border-color: #1985ac;
+        }
+        .btn.btn-success{
+            color: #fff;
+            background-color: #4dbd74;
+            border-color: #4dbd74;
+        }
+        .btn.btn-success:hover{
+            color: #fff;
+            background-color: #3ea662;
+            border-color: #3a9d5d;
+        }
+    </style>
+</head>
+<body>
+    <main class="main">
+        <h4 class="text-center">به سیستم آزمون آنلاین خوش آمدید</h4>
+        <div class="action-buttons">
+            <a href="/professor" class="btn btn-primary">ورود به پنل اساتید</a>
+            <a href="/user" class="btn btn-success">ورود به پنل دانشجویان</a>
+        </div>
+    </main>
+</body>
+</html>
