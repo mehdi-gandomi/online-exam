@@ -1,0 +1,56 @@
+{% extends 'layout/user.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body" style="min-height: 550px">
+            <h4 class="text-center mt-4 mb-4">لیست آزمون های تمام شده</h4>
+            <table class="table OrdersTable compact is--responsive">
+                <thead>
+                    <th class="text-center bg-teal-dark" scope="col">#</th>
+                    <th class="text-center bg-teal-dark" scope="col">عنوان آزمون</th>
+                    <th class="text-center bg-teal-dark" scope="col">تعداد سوالات</th>
+                    <th class="text-center bg-teal-dark" scope="col">نمره آزمون</th>
+                    <th class="text-center bg-teal-dark" scope="col">نمره شما</th>
+                    <th class="text-center bg-teal-dark" scope="col">عملیات</th>
+                </thead>
+                <tbody id="newOrdersWrap">
+                {% for exam in exams %}
+                    <tr>
+                        <td data-label="ردیف">{{exam.id}}</td>
+                        <td data-label="عنوان آزمون">{{exam.name}}</td>
+                        <td data-label="تعداد سوالات">{{exam.question_count}}</td>
+                        <td data-label="نمره آزمون">{{exam.exam_mark}}</td>
+                        <td data-label="نمره شما">{{exam.user_final_mark}}</td>
+                        <td data-label="عملیات" class="order-actions">
+                            <button onclick="showExamInfo('{{exam.exam_id}}')" class="btn btn-primary d-inline-flex align-items-center">
+                                <i class="icon-info"></i>
+                                <span class="mr-2">جزئیات آزمون</span>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="examDetailsModal" tabindex="-1" role="dialog" aria-labelledby="examDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title" id="examDetailsModalLabel">اطلاعات آزمون</h5>
+                    {# <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> #}
+                </div>
+                <div class="modal-body" id="examDetails" style="padding:2rem"></div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script_below %}
+    <script src="/public/js/exams_results.js"></script>
+{% endblock %}

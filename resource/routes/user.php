@@ -11,5 +11,8 @@ $app->group('/user', function ($app) use ($container) {
     $app->get('/exams', "App\Controllers\UserController:get_exams_page");
     $app->get('/exam/json/{exam_id}', "App\Controllers\UserController:get_exam_info");
     $app->get('/exam/{exam_id}', "App\Controllers\UserController:get_exam_page");
+    $app->get('/exams/results', "App\Controllers\UserController:get_exams_results");
+    $app->get('/exam/results/json/{exam_id}', "App\Controllers\UserController:get_exam_results_json");
+
     $app->post('/exam/save', "App\Controllers\UserController:post_save_exam_info");
 });

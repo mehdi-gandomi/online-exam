@@ -75,6 +75,32 @@ class Exam extends Model
         }
     }
 
+    public static function get_completed_exams_by_user_id($userId)
+    {
+        try{
+            $db=static::getDB();
+            $sql="SELECT exam_results.final_mark AS user_final_mark,exam_results.exam_id,exams.name,exams.question_count,exams.exam_mark FROM exam_results INNER JOIN exams ON exams.id = exam_results.exam_id WHERE exam_results.user_id = :user_id";
+            $stmt=$db->prepare($sql);
+            $stmt->bindParam(":user_id",$userId);
+            return $stmt->execute() ? $stmt->fetchAll(PDO::FETCH_ASSOC):[];
+        }catch (\Exception $e){
+            return [];
+        }
+    }
+
+    public static function get_results_info_by_id($examId)
+    {
+        try{
+            $db=static::getDB();
+            $sql="SELECT exam_results.exam_id,exam_results.correct_answers,exam_results.incorrect_answers,exam_results.negative_mark,exam_results.final_mark,study_fields.title AS study_field,exams.name,exams.question_count,exams.has_negative_mark,exams.negative_mark_count,exams.exam_time,exams.exam_mark,exams.create_date_persian,exams.is_disabled FROM `exam_results`INNER JOIN exams ON exams.id = exam_results.exam_id INNER JOIN study_fields ON exams.study_field_id = study_fields.id WHERE exam_results.exam_id = :exam_id";
+            $stmt=$db->prepare($sql);
+            $stmt->bindParam(":exam_id",$examId);
+            return $stmt->execute() ? $stmt->fetch(PDO::FETCH_ASSOC):false;
+        }catch (\Exception $e){
+            return false;
+        }
+    }
+
     protected static function getCurrentDatePersian()
     {
         $now = new \DateTime("NOW");

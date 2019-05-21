@@ -35,4 +35,16 @@ class UserController extends Controller{
             }
         }
     }
+
+    public function get_exams_results($req,$res,$args)
+    {
+        $exams=Exam::get_completed_exams_by_user_id(1);
+        return $this->view->render($res,"user/exams_results.twig",['exams'=>$exams]);
+    }
+
+    public function get_exam_results_json($req,$res,$args)
+    {
+        $examInfo=Exam::get_results_info_by_id($args['exam_id']);
+        return $examInfo ? $res->withJson(['ok'=>true,'info'=>$examInfo]):['ok'=>false];
+    }
 }
