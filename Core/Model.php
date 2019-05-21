@@ -39,18 +39,16 @@ class Model
         $db=self::getDB();
         $sql="SELECT ".self::prepare_input($fields)." FROM `$tblName`";
         if (count($where)){
-            $whereString=" WHERE ";
+            $whereArr=[];
             foreach($where as $key=>$value){
-                if($whereString!=" WHERE "){
-                    $whereString.=" AND ";
-                }
                 if(is_array($value)){
-                    $whereString.="`$key` $value[0] :$key";
+                    $whereArr[]="`$key` $value[0] :$key";
                 }else{
-                    $whereString.="`$key`= :$key";
+                    $whereArr[]="`$key`= :$key";
                 }
             }
-            $sql.=$whereString;
+            $sql.=" WHERE ".implode(" AND ",$whereArr);
+            $whereArr=null;
         }
         if ($options){
             $options=self::prepare_input($options);
@@ -59,10 +57,8 @@ class Model
         $stmt=$db->prepare($sql);
         foreach($where as $key=>$value){
             if(is_array($value)){
-                
                 $stmt->bindParam(":$key", $value[1]);
             }else{
-                
                 $stmt->bindParam(":$key", $value);
             }
         }

@@ -9,8 +9,6 @@
         </a> #}
 
             <form method="POST" action="/user/login" class="auth__form center">
-                <input type="hidden" name="csrf_name" value="{{csrf_name}}">
-                <input type="hidden" name="csrf_value" value="{{csrf_value}}">
                 <p class="auth__form__title">ورود دانشجو</p>
                 <div class="auth__form__icon">
                     <img src="/public/images/icon/login-icon.svg" alt="">
@@ -47,7 +45,6 @@
 {% endblock %}
 
 {% block scriptbelow %}
-    <script src="/public/js/axios.min.js"></script>
     <script>
         addListener("#password", "keyup", function (e) {
 

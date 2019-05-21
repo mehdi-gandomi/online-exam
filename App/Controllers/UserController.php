@@ -86,7 +86,7 @@ class UserController extends Controller{
         } else {
             $this->flash->addMessage('userLoginError', "نام کاربری وارد شده صحیح نمی باشد !");
             $_SESSION['login_username'] = $postFields['username'];
-            return $res->withRedirect('/user/login');
+//            return $res->withRedirect('/user/login');
         }
 
     }
