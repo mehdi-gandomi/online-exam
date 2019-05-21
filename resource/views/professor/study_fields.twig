@@ -1,0 +1,43 @@
+{% extends 'layout/professor.twig' %}
+
+{% block content %}
+    <div class="card">
+       <div class="row">
+           <div class="col-md-5">
+                <h4 class="text-center">افزودن گروه امتحانی</h4>
+               <form action="/user/fields/new" id="newStudyForm"></form>
+           </div>
+           <div class="col-md-7">
+               <h4 class="text-center mt-4">گروه های امتحانی</h4>
+             <table class="table OrdersTable compact is--responsive">
+                <thead>
+                    <th class="text-center bg-teal-dark" scope="col">شماره گروه امتحانی</th>
+                    <th class="text-center bg-teal-dark" scope="col">عنوان گروه امتحانی</th>
+                    <th class="text-center bg-teal-dark" scope="col">عملیات</th>
+                </thead>
+                <tbody id="newOrdersWrap">
+                    {% for field in study_fields %}
+                        <tr>
+                            <td data-label="شماره گروه">{{field.id}}</td>
+                            <td data-label="عنوان گروه">{{field.title}}</td>
+
+                            <td data-label="عملیات" class="order-actions">
+                                <button onclick="showFieldInfo('{{field.id}}')" class="btn btn-primary">
+                                    <i class="icon-info"></i>
+                                    <span>جزئیات گروه</span>
+                                </button>
+                                <button onclick="deleteField('{{field.id}}')" class="btn btn-danger">
+                                    <i class="icon-trash"></i>
+                                    <span>حذف گروه</span>
+                                </button>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+        </table>
+           </div>
+       </div>
+    </div>
+{% endblock %}

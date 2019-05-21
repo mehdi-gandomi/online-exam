@@ -11,19 +11,19 @@ class Config
      * Database name
      * @var string
      */
-    const DB_NAME = 'motarjem1';
+    const DB_NAME = 'online_exam';
     //motarje6_db
     /**
      * Database user
      * @var string
      */
-    const DB_USER = 'coderguy';
+    const DB_USER = 'root';
     //motarje6_user
     /**
      * Database password
      * @var string
      */
-    const DB_PASSWORD = 'mgmehdi@159';
+    const DB_PASSWORD = '';
     //VGB[13D?XQZ,
     /**
      * Show or hide error messages on screen
@@ -31,9 +31,5 @@ class Config
      */
     const SHOW_ERRORS = true;
 
-    const ENCRYPTION_KEY="c8tUbkNbXDQcuKL3";
-    const ENCRYPTION_LENGTH=8;
     const BASE_URL="http://motarjem1.com";
-    //http://motarjem1.com
-    const VERIFY_EMAIL_KEY="c8tUbkNbXDQcuKL3";
 }

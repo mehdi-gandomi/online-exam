@@ -1,0 +1,46 @@
+.auto-incr-form{
+  counter-reset: step-counter;
+  &:before{
+    position: absolute;
+    content: "";
+    width: 5px;
+    height:50%;
+    background: #efdede;
+    right:24px;
+    top:107px;
+    z-index: 0;
+  }
+  .step{
+    position: relative;
+    padding-right:2.5rem;
+    margin-bottom: 2rem;
+    &:before{
+      position: absolute;
+      counter-increment: step-counter;
+      content: counter(step-counter);
+      background: transparent;
+      border-radius: 30%;
+      right: 0;
+      top: -10px;
+      border: 3px solid #efdede;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 37px;
+      font-size: 1rem;
+      z-index: 3;
+    }
+    &:after{
+      position: absolute;
+      content: "";
+      right: 18px;
+      top: -7px;
+      z-index: 2;
+      font-size: 1.125rem;
+      font-weight: 500;
+      width: 10px;
+      background: #fff;
+      height: 35px;
+    }
+  }
+}

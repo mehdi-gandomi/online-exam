@@ -1,0 +1,33 @@
+{% extends 'layout/user.twig' %}
+
+{% block content %}
+    <div class="d-flex flex-d-column align-items-center justify-content-center" style="height: 100%">
+        <div class="card">
+            <div class="card-body">
+                <ul style="line-height: 2.5;list-style: none">
+                    <li >
+                        <span class="font-weight-bold">عنوان آزمون :</span>
+                        <span style="font-size: 0.9rem">{{ exam_title }}</span>
+                    </li>
+                    <li >
+                        <span class="font-weight-bold">تعداد پاسح صحیح :</span>
+                        {{ correct_answers }}
+                    </li>
+                    <li >
+                        <span class="font-weight-bold">تعداد پاسح غلط :</span>
+                        {{ incorrect_answers }}
+                    </li>
+                    <li >
+                        <span class="font-weight-bold">نمره نهایی :</span>
+                        {{ final_mark }}
+                    </li>
+                </ul>
+                <div class="d-flex justify-content-center ">
+
+                    <a href="/user" class="btn btn-primary">بازگشت به صفحه اصلی</a>
+                    <a href="/user/exam-result/{{ exam_id }}" style="margin-right: 1rem" class="btn btn-success">مشاهده جواب های شما</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

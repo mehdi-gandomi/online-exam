@@ -109,6 +109,13 @@
             border: 1px solid #ebebeb;
         }
     }
+    &.compact{
+        tbody{
+            td{
+                height: 65px;
+            }
+        }
+    }
 }
 
 .table {

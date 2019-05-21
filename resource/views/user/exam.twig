@@ -1,0 +1,47 @@
+{% extends 'layout/user.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="text-center mt-4 mb-5">
+
+                {{ exam_title }}
+            </h4>
+            <form method="post" action="/user/exam/save" class="auto-incr-form">
+                <input type="hidden" name="exam_id" value="{{ exam_id }}">
+                {% for question in questions %}
+                    <div class="row step">
+                        <div class="col-12">
+                            <h5>{{ question.title }}</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="radio" for="choice-{{ question.id }}-1">
+                                <input type="radio" name="question-{{ question.id }}" id="choice-{{ question.id }}-1" value="1" >
+                                <span>الف ) &nbsp; {{ question.option1 }}</span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="radio" for="choice-{{ question.id }}-2">
+                                <input type="radio" name="question-{{ question.id }}" id="choice-{{ question.id }}-2" value="2" >
+                                <span>ب ) &nbsp; {{ question.option2 }}</span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="radio" for="choice-{{ question.id }}-3">
+                                <input type="radio" name="question-{{ question.id }}" id="choice-{{ question.id }}-3" value="3" >
+                                <span>د ) &nbsp; {{ question.option3 }}</span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="radio" for="choice-{{ question.id }}-4">
+                                <input type="radio" name="question-{{ question.id }}" id="choice-{{ question.id }}-4" value="4" >
+                                <span>ه ) &nbsp; {{ question.option4 }}</span>
+                            </label>
+                        </div>
+                    </div>
+                {% endfor %}
+                <input type="submit" class="btn btn-success mr-4 mt-4" value="ثبت">
+            </form>
+        </div>
+    </div>
+{% endblock %}

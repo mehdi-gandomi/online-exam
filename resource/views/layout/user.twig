@@ -28,10 +28,11 @@
                 </nav>
                 <button class="sidebar-minimizer brand-minimizer" type="button"></button>
             </div>
-            {% block content %}
-                {# main content goes here #}
-            {% endblock %}
-
+            <main class="main">
+                {% block content %}
+                    {# main content goes here #}
+                {% endblock %}
+            </main>
         </div>
         <footer class="app-footer">
             {# <div>
