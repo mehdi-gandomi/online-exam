@@ -16779,6 +16779,11 @@ body {
   cursor: pointer;
 }
 
+.radio.inline {
+  display: inline-block;
+  margin: 5px 6px;
+}
+
 .radio input {
   display: none;
 }

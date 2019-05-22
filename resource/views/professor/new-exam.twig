@@ -1,0 +1,70 @@
+{% extends 'layout/professor.twig' %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-body" style="min-height: 550px;padding: 2rem">
+            <h3 class="text-center mt-4 mb-5">افزودن آزمون</h3>
+            <form class="row" action="/professor/exam/new" method="post">
+                <div class="form-group col-md-3">
+                    <label for="examName">عنوان</label>
+                    <input class="form-control" type="text" id="examName" name="name" >
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="study_field_id">گروه امتحانی</label>
+                    <select class="form-control" name="study_field_id" id="study_field_id">
+                        {% for field in study_fields %}
+                            <option value="{{ field.id }}">{{ field.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="questionCount">تعداد سوالات</label>
+                    <input class="form-control" type="number" id="questionCount" name="question_count" >
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="examTime">زمان ازمون (دقیقه)</label>
+                    <input class="form-control" type="number" id="examTime" name="exam_time" >
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="examMark">نمره آزمون</label>
+                    <input class="form-control" type="number" id="examMark" name="exam_mark" >
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="" class="d-block">نمره منفی : </label>
+                    <label class="radio inline" for="hasNegativemark">
+                        <input type="radio" name="has_negative_mark" id="hasNegativemark" value="1" >
+                        <span>دارد</span>
+                    </label>
+                    <label class="radio inline" for="dontHaveNegativemark">
+                        <input type="radio" name="has_negative_mark" id="dontHaveNegativemark" value="0" checked>
+                        <span>ندارد</span>
+                    </label>
+                </div>
+                <div class="form-group col-md-3 mt-3" id="negativeMarkCountWrap">
+                    <label for="negativeMarkCount">تعداد سوالات نمره منفی دار</label>
+                    <input class="form-control" type="number" id="negativeMarkCount" name="negative_mark_count" >
+                </div>
+                <div class="form-group col-md-2 mt-3">
+                    <label for="examژoefficient">تعداد واحد</label>
+                    <input class="form-control" type="number" id="examژoefficient" name="exam_coefficient" >
+                </div>
+                <div class="form-group col-md-3 mt-3">
+                    <label for="" class="d-block">وضعیت فعال بودن : </label>
+                    <label class="radio inline" for="isNotDisabled">
+                        <input type="radio" name="is_disabled" id="isNotDisabled" value="0"  checked>
+                        <span>فعال</span>
+                    </label>
+                    <label class="radio inline" for="isDisabled">
+                        <input type="radio" name="is_disabled" id="isDisabled" value="1" >
+                        <span>غیرفعال</span>
+                    </label>
+                </div>
+                <div class="form-group col-12">
+                    <input type="submit" class="btn btn-success" value="ارسال">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

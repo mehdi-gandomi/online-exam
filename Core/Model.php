@@ -85,9 +85,30 @@ class Model
     }
     public static function delete($tbl_name,$where){
         $db=self::getDB();
-        $where=self::prepare_input($where);
-        $sql="DELETE FROM `$tbl_name` WHERE $where";
-        return $db->query($sql);
+        $sql="DELETE FROM `$tbl_name`";
+        if (count($where)){
+            $whereArr=[];
+            foreach($where as $key=>$value){
+                if(is_array($value)){
+                    $whereArr[]="`$key` $value[0] :$key";
+                }else{
+                    $whereArr[]="`$key`= :$key";
+                }
+            }
+            $sql.=" WHERE ".implode(" AND ",$whereArr);
+            $whereArr=null;
+        }else{
+            return false;
+        }
+        $stmt=$db->prepare($sql);
+        foreach($where as $key=>$value){
+            if(is_array($value)){
+                $stmt->bindParam(":$key", $value[1]);
+            }else{
+                $stmt->bindParam(":$key", $value);
+            }
+        }
+        return $stmt->execute();
     }
   
 

@@ -1,0 +1,111 @@
+{% extends 'layout/professor.twig' %}
+{% block style_below %}
+    <link rel="stylesheet" href="/public/css/alertify.rtl.min.css">
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-body" style="min-height: 550px;padding: 2rem">
+                <h3 class="text-center mt-4 mb-5">اضافه کردن سوالات برای آزمون ({{ exam_info.name }})</h3>
+                <div class="row">
+                {% for i in range(1,exam_info.question_count) %}
+                    <form class="new-question col-4" action="/professor/new-exam/question/save" method="post">
+                        <input type="hidden" name="exam_id" value="{{ exam_info.id }}">
+
+                        <h4 class="text-center">سوال شماره {{ i }}</h4>
+                        <div class="form-group">
+                            <label >عنوان سوال</label>
+                            <textarea class="form-control" type="text" name="title" ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label >گزینه اول</label>
+                            <input class="form-control" type="text" name="option1" >
+                        </div>
+                        <div class="form-group">
+                            <label >گزینه دوم</label>
+                            <input class="form-control" type="text" name="option2" >
+                        </div>
+                        <div class="form-group">
+                            <label >گزینه سوم</label>
+                            <input class="form-control" type="text" name="option3" >
+                        </div>
+                        <div class="form-group">
+                            <label >گزینه چهارم</label>
+                            <input class="form-control" type="text" name="option4" >
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <label >پاسخ درست</label>
+                                <select class="form-control" name="answer" >
+                                    <option value="1">
+                                        گزینه اول
+                                    </option>
+                                    <option value="2">
+                                        گزینه دوم
+                                    </option>
+                                    <option value="3">
+                                        گزینه سوم
+                                    </option>
+                                    <option value="4">
+                                        گزینه سوم
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="examMark">نمره سوال</label>
+                                <input class="form-control" type="text" name="mark" id="examMark">
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <input type="submit" class="btn btn-success" value="اضافه کردن">
+                            {#<button type="button" id="addQuestionAndNew"  class="btn btn-success">اضافه کردن و جدید</button>#}
+                        </div>
+                    </form>
+                {% endfor %}
+                </div>
+                <h4 class="text-center mt-4 mb-4">سوالات اضافه شده</h4>
+                <div id="addedQuestions" class="row"></div>
+        </div></div>
+{% endblock %}
+
+{% block script_below %}
+    <script src="/public/js/sweetalert2@8.js"></script>
+    <script src="/public/js/alertify.min.js"></script>
+    <script>
+        $(".new-question").on("submit",function (e) {
+            e.preventDefault();
+            let $this=$(this);
+            $.ajax({
+                type:"POST",
+                url:$this.attr("action"),
+                data:$this.serialize(),
+                success:function (data,status) {
+                    if (data.ok){
+                        alertify.success('سوال با موفقیت اضافه شد');
+                        $this.fadeOut();
+                        $this.remove();
+                        $("#addedQuestions").append(`
+                            <div class="col-md-3 d-flex justify-content-between ">
+                                <p>سوال (${data.info.name})</p>
+                                <button class="btn btn-primary" onclick="showQuestionInfo('${data.info.id}')" >مشاهده اطلاعات سوال</button>
+                            </div>
+                        `);
+                        let $elements=$("#new-question");
+                        if ($elements.length < 1){
+                            Swal.fire({
+                                title: 'موفق',
+                                text: "همه سوالات با موفقیت اضافه شد",
+                                type: 'info',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'بازگشت به صفحه اصلی',
+                            }).then(function(result) {
+                                if (result.value) {
+                                    window.location.href=window.location.origin;
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

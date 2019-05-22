@@ -14,4 +14,26 @@ class Fields extends Model
             return [];
         }
     }
+
+    public static function new($post)
+    {
+        try{
+            static::insert("study_fields",[
+               'title'=>$post['name']
+            ]);
+            return true;
+        }catch (\Exception $e){
+            return false;
+        }
+    }
+
+    public static function delete_by_id($fieldId)
+    {
+        try{
+            static::delete("study_fields",['id'=>$fieldId]);
+            return true;
+        }catch (\Exception $e){
+            return false;
+        }
+    }
 }

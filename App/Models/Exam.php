@@ -104,6 +104,28 @@ class Exam extends Model
         }
     }
 
+    public static function new($post)
+    {
+        try{
+            $post['create_date_persian']=self::getCurrentDatePersian();
+            static::insert("exams",$post);
+            return static::get_last_inserted_id();
+        }catch (\Exception $e){
+            return false;
+        }
+    }
+
+    public static function new_question($post)
+    {
+        try{
+            static::insert("questions",$post);
+            return static::get_last_inserted_id();
+        }catch (\Exception $e){
+            file_put_contents("err.txt",$e->getMessage());
+            return false;
+        }
+    }
+
     protected static function getCurrentDatePersian()
     {
         $now = new \DateTime("NOW");

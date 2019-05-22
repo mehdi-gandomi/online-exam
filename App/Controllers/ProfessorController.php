@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Models\Professor;
 use Core\Controller;
 use App\Models\Fields;
+use App\Models\Exam;
 class ProfessorController extends Controller{
     public function get_study_fields($req,$res,$args)
     {
@@ -30,7 +31,6 @@ class ProfessorController extends Controller{
     {
         $postFields = $req->getParsedBody();
         $userData = Professor::by_username($postFields['username'], "*");
-        var_dump($userData);
         if ($userData) {
             if ($userData['password'] === \md5(\md5($postFields['password']))) {
                 $_SESSION['is_professor_logged_in'] = true;
@@ -47,7 +47,7 @@ class ProfessorController extends Controller{
         } else {
             $this->flash->addMessage('userLoginError', "نام کاربری وارد شده صحیح نمی باشد !");
             $_SESSION['login_username'] = $postFields['username'];
-//            return $res->withRedirect('/professor/login');
+            return $res->withRedirect('/professor/login');
         }
 
     }
@@ -62,5 +62,50 @@ class ProfessorController extends Controller{
         unset($_SESSION['user_type']);
         unset($_COOKIE[\session_name()]);
         return $res->withRedirect('/');
+    }
+
+    public function new_study_field($req,$res,$args)
+    {
+        $body=$req->getParsedBody();
+        $result=Fields::new($body);
+        return $result ? $res->withJson(['ok'=>true]):$res->withJson(['ok'=>false]);
+    }
+
+    public function delete_study_field($req,$res,$args)
+    {
+        $result=Fields::delete_by_id($args['field_id']);
+        return $result ? $res->withJson(['ok'=>true]):$res->withJson(['ok'=>false]);
+    }
+
+    public function new_exam($req,$res,$args)
+    {
+        $fields=Fields::all();
+        return $this->view->render($res,"professor/new-exam.twig",['study_fields'=>$fields]);
+    }
+
+    public function post_new_exam($req,$res,$args)
+    {
+        $body=$req->getParsedBody();
+        $examId=Exam::new($body);
+        if ($examId){
+            return $res->withRedirect("/professor/new-exam/questions/new?exam_id=$examId");
+        }
+    }
+
+    public function new_exam_questions($req,$res,$args)
+    {
+        $examId=$req->getQueryParam("exam_id");
+        $examInfo=Exam::by_id($examId);
+        if ($examInfo){
+            return $this->view->render($res,"professor/add-questions.twig",['exam_info'=>$examInfo]);
+        }
+        echo "چنین آزمونی یافت نشد";
+    }
+
+    public function save_exam_question($req,$res,$args)
+    {
+        $body=$req->getParsedBody();
+        $result=Exam::new_question($body);
+        return $result ? $res->withJson(['ok'=>true,'info'=>['id'=>$result,'name'=>$body['title']]]):$res->withJson(['ok'=>false]);
     }
 }

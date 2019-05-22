@@ -6,6 +6,10 @@ $radioActive: #5D9BFB;
   margin: 16px 0;
   display: block;
   cursor: pointer;
+  &.inline{
+    display:inline-block;
+    margin: 5px 6px;
+  }
   input {
     display: none;
     & + span {
