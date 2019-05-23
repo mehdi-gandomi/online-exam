@@ -121,7 +121,7 @@ function renderExamInfo(info) {
               </div>
        </div>
        <div class="d-flex justify-content-center mt-4">
-            <a href="/user/exam-result/${info.exam_id}" class="btn btn-success">مشاهده جواب ها </a>
+            <a href="/professor/exam/user-answers?exam_id=${info.exam_id}&user_id=${info.user_id}" class="btn btn-success">مشاهده جواب ها </a>
             <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">بستن</button>
        </div>
     `;
@@ -132,7 +132,6 @@ function renderExamInfo(info) {
 function showExamInfo(examId) {
     $.get("/professor/exam/results/json/"+examId,function (data,status) {
         if (data.ok){
-            console.log(data);
             renderExamInfo(data.info);
         }
     })

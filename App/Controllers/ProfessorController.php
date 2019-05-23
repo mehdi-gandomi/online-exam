@@ -160,4 +160,12 @@ class ProfessorController extends Controller{
         $result=Exam::exam_result_by_id($args['exam_id']);
         return $result ? $res->withJson(['ok'=>true,'info'=>$result]):$res->withJson(['ok'=>false]);
     }
+
+    public function get_user_answers_page($req,$res,$args)
+    {
+        $examId=$req->getParam("exam_id");
+        $userId=$req->getParam("user_id");
+        $questions=Exam::get_user_question_answers_by_exam_id($examId,$userId);
+        return $this->view->render($res,"professor/user-question-answers.twig",['questions'=>$questions]);
+    }
 }

@@ -30,7 +30,7 @@ $app->group('/professor', function ($app) use ($container) {
     $app->get('/exam/questions/show/{exam_id}', "App\Controllers\ProfessorController:get_exam_questions_page");
     $app->get('/exams/results', "App\Controllers\ProfessorController:get_exams_results_page");
     $app->get('/exam/results/json/{exam_id}', "App\Controllers\ProfessorController:get_exam_result_json");
-
+    $app->get('/exam/user-answers', "App\Controllers\ProfessorController:get_user_answers_page");
 })->add($authMV);
 $app->get('/professor/login', "App\Controllers\ProfessorController:get_login_page");
 $app->post('/professor/login', "App\Controllers\ProfessorController:post_login");

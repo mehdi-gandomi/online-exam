@@ -183,7 +183,7 @@ class Exam extends Model
     {
         try{
             $db=static::getDB();
-            $sql="SELECT exam_results.id,exam_results.exam_id,exam_results.correct_answers,exam_results.incorrect_answers,exam_results.negative_mark,exam_results.final_mark,exams.name,exams.question_count,exams.has_negative_mark,exams.negative_mark_count,exams.exam_time,exams.exam_mark,exams.exam_coefficient,exams.create_date_persian,exams.is_disabled,study_fields.title AS study_field,users.fname,users.lname,users.username FROM exam_results INNER JOIN exams ON exams.id = exam_results.exam_id INNER JOIN study_fields ON study_fields.id = exams.study_field_id INNER JOIN users ON users.id = exam_results.user_id";
+            $sql="SELECT exam_results.id,exam_results.user_id,exam_results.exam_id,exam_results.correct_answers,exam_results.incorrect_answers,exam_results.negative_mark,exam_results.final_mark,exams.name,exams.question_count,exams.has_negative_mark,exams.negative_mark_count,exams.exam_time,exams.exam_mark,exams.exam_coefficient,exams.create_date_persian,exams.is_disabled,study_fields.title AS study_field,users.fname,users.lname,users.username FROM exam_results INNER JOIN exams ON exams.id = exam_results.exam_id INNER JOIN study_fields ON study_fields.id = exams.study_field_id INNER JOIN users ON users.id = exam_results.user_id";
             $result=$db->query($sql);
             return $result ? $result->fetchAll(PDO::FETCH_ASSOC):[];
         }catch (\Exception $e){
@@ -194,10 +194,24 @@ class Exam extends Model
     {
         try{
             $db=static::getDB();
-            $sql="SELECT exam_results.id,exam_results.exam_id,exam_results.correct_answers,exam_results.incorrect_answers,exam_results.negative_mark,exam_results.final_mark,exams.name,exams.question_count,exams.has_negative_mark,exams.negative_mark_count,exams.exam_time,exams.exam_mark,exams.exam_coefficient,exams.create_date_persian,exams.is_disabled,study_fields.title AS study_field,users.fname,users.lname,users.username FROM exam_results INNER JOIN exams ON exams.id = exam_results.exam_id INNER JOIN study_fields ON study_fields.id = exams.study_field_id INNER JOIN users ON users.id = exam_results.user_id WHERE exam_results.exam_id = :exam_id";
+            $sql="SELECT exam_results.id,exam_results.user_id,exam_results.exam_id,exam_results.correct_answers,exam_results.incorrect_answers,exam_results.negative_mark,exam_results.final_mark,exams.name,exams.question_count,exams.has_negative_mark,exams.negative_mark_count,exams.exam_time,exams.exam_mark,exams.exam_coefficient,exams.create_date_persian,exams.is_disabled,study_fields.title AS study_field,users.fname,users.lname,users.username FROM exam_results INNER JOIN exams ON exams.id = exam_results.exam_id INNER JOIN study_fields ON study_fields.id = exams.study_field_id INNER JOIN users ON users.id = exam_results.user_id WHERE exam_results.exam_id = :exam_id";
             $stmt=$db->prepare($sql);
             $stmt->bindParam(":exam_id",$examId);
             return $stmt->execute() ? $stmt->fetch(PDO::FETCH_ASSOC):[];
+        }catch (\Exception $e){
+            return [];
+        }
+    }
+
+    public static function get_user_question_answers_by_exam_id($examId,$userId)
+    {
+        try{
+            $db=static::getDB();
+            $sql="SELECT exam_logs.choice,questions.title,questions.option1,questions.option2,questions.option3,questions.option4,questions.answer FROM exam_results INNER JOIN questions ON questions.exam_id = exam_results.exam_id INNER JOIN exam_logs ON questions.id = exam_logs.question_id WHERE exam_results.exam_id = :exam_id AND exam_logs.user_id = :user_id";
+            $stmt=$db->prepare($sql);
+            $stmt->bindParam(":exam_id",$examId);
+            $stmt->bindParam(":user_id",$userId);
+            return $stmt->execute() ? $stmt->fetchAll(PDO::FETCH_ASSOC):[];
         }catch (\Exception $e){
             return [];
         }
