@@ -22,6 +22,9 @@ $app->group('/professor', function ($app) use ($container) {
     $app->delete('/study-field/{field_id}', "App\Controllers\ProfessorController:delete_study_field");
     $app->post('/exam/new', "App\Controllers\ProfessorController:post_new_exam");
     $app->get('/new-exam/questions/new', "App\Controllers\ProfessorController:new_exam_questions");
+    $app->get('/question/info/json', "App\Controllers\ProfessorController:get_question_info");
+    $app->get('/exams', "App\Controllers\ProfessorController:get_exams_page");
+    $app->delete('/exam/{exam_id}', "App\Controllers\ProfessorController:delete_exam");
     $app->post("/new-exam/question/save", "App\Controllers\ProfessorController:save_exam_question");
 })->add($authMV);
 $app->get('/professor/login', "App\Controllers\ProfessorController:get_login_page");

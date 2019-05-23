@@ -21,71 +21,86 @@
             right: 50%;
             transform: translate(50%,-50%);
         }
+        .is-full{
+            height: 550px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
     </style>
 {% endblock %}
 {% block content %}
     <div class="card">
         <div class="card-body"  style="min-height: 550px;padding: 2rem">
+            {% if is_full %}
+                <div class="is-full">
+                    <h4>سوالات این آزمون قبلا اضافه شده است</h4>
+                    <button class="btn btn-primary" onclick="window.location.href=window.location.origin+'/professor'">بازگشت به صفحه اصلی</button>
+                </div>
+            {% else %}
                 <h3 class="text-center mt-4 mb-5" id="page-title">اضافه کردن سوالات برای آزمون ({{ exam_info.name }})</h3>
                 <div class="row" id="questions-wrap">
-                {% for i in range(1,exam_info.question_count) %}
-                    <form class="new-question col-4" action="/professor/new-exam/question/save" method="post">
-                        <input type="hidden" name="exam_id" value="{{ exam_info.id }}">
+                    {% for i in range(1,exam_info.question_count) %}
+                        <form class="new-question col-4" action="/professor/new-exam/question/save" method="post">
+                            <input type="hidden" name="exam_id" value="{{ exam_info.id }}">
 
-                        <h4 class="text-center">سوال شماره {{ i }}</h4>
-                        <div class="form-group">
-                            <label >عنوان سوال</label>
-                            <textarea class="form-control" type="text" name="title" ></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label >گزینه اول</label>
-                            <input class="form-control" type="text" name="option1" >
-                        </div>
-                        <div class="form-group">
-                            <label >گزینه دوم</label>
-                            <input class="form-control" type="text" name="option2" >
-                        </div>
-                        <div class="form-group">
-                            <label >گزینه سوم</label>
-                            <input class="form-control" type="text" name="option3" >
-                        </div>
-                        <div class="form-group">
-                            <label >گزینه چهارم</label>
-                            <input class="form-control" type="text" name="option4" >
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <label >پاسخ درست</label>
-                                <select class="form-control" name="answer" >
-                                    <option value="1">
-                                        گزینه اول
-                                    </option>
-                                    <option value="2">
-                                        گزینه دوم
-                                    </option>
-                                    <option value="3">
-                                        گزینه سوم
-                                    </option>
-                                    <option value="4">
-                                        گزینه سوم
-                                    </option>
-                                </select>
+                            <h4 class="text-center">سوال شماره {{ i }}</h4>
+                            <div class="form-group">
+                                <label >عنوان سوال</label>
+                                <textarea class="form-control" type="text" name="title" ></textarea>
                             </div>
-                            <div class="col-md-6">
-                                <label for="examMark">نمره سوال</label>
-                                <input class="form-control" type="text" name="mark" id="examMark">
+                            <div class="form-group">
+                                <label >گزینه اول</label>
+                                <input class="form-control" type="text" name="option1" >
                             </div>
-                        </div>
-                        <div class="form-group mt-4">
-                            <input type="submit" class="btn btn-success" value="اضافه کردن">
-                            {#<button type="button" id="addQuestionAndNew"  class="btn btn-success">اضافه کردن و جدید</button>#}
-                        </div>
-                    </form>
-                {% endfor %}
+                            <div class="form-group">
+                                <label >گزینه دوم</label>
+                                <input class="form-control" type="text" name="option2" >
+                            </div>
+                            <div class="form-group">
+                                <label >گزینه سوم</label>
+                                <input class="form-control" type="text" name="option3" >
+                            </div>
+                            <div class="form-group">
+                                <label >گزینه چهارم</label>
+                                <input class="form-control" type="text" name="option4" >
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <label >پاسخ درست</label>
+                                    <select class="form-control" name="answer" >
+                                        <option value="1">
+                                            گزینه اول
+                                        </option>
+                                        <option value="2">
+                                            گزینه دوم
+                                        </option>
+                                        <option value="3">
+                                            گزینه سوم
+                                        </option>
+                                        <option value="4">
+                                            گزینه سوم
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="examMark">نمره سوال</label>
+                                    <input class="form-control" type="text" name="mark" id="examMark">
+                                </div>
+                            </div>
+                            <div class="form-group mt-4">
+                                <input type="submit" class="btn btn-success" value="اضافه کردن">
+                                {#<button type="button" id="addQuestionAndNew"  class="btn btn-success">اضافه کردن و جدید</button>#}
+                            </div>
+                        </form>
+                    {% endfor %}
                 </div>
-                <h4 class="text-center mt-4 mb-4">سوالات اضافه شده</h4>
+                <h4 class="text-center mt-4 mb-4 d-none" id="addedQuestionsTitle">سوالات اضافه شده</h4>
                 <div id="addedQuestions" class="row"></div>
-        </div></div>
+            {% endif %}
+        </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="questionInfoModal" tabindex="-1" role="dialog" aria-labelledby="questionInfoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -97,7 +112,9 @@
                     </button> #}
                 </div>
                 <div class="modal-body" id="questionInfo" style="padding:2rem"></div>
-
+                <div class="modal-footer justify-content-start">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">بستن</button>
+                </div>
             </div>
         </div>
     </div>

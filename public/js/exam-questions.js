@@ -10,6 +10,7 @@ $(".new-question").on("submit",function (e) {
                 alertify.success('سوال با موفقیت اضافه شد');
                 $this.fadeOut();
                 $this.remove();
+                $("#addedQuestionsTitle").removeClass("d-none");
                 $("#addedQuestions").append(`
                             <div class="col-md-3  question-card ">
                                 <h5 class="m-0">سوال (${data.info.name})</h5>
@@ -19,10 +20,24 @@ $(".new-question").on("submit",function (e) {
                 let $elements=$(".new-question");
                 if ($elements.length < 1){
                     $("#questions-wrap").addClass("compact");
+                    Swal.fire({
+                        title: 'موفق !',
+                        text: "تمام سوالات با موفقیت افزوده شدند",
+                        type: 'success',
+                        showCancelButton:true,
+                        cancelButtonText:"باشه",
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'بازگشت به صفحه اصلی'
+                    }).then(function(result){
+                        if (result.value) {
+                            window.location.href=window.location.origin+"/professor";
+                        }
+                    })
                     $("#questions-wrap").html(`
                                 <div class="d-flex justify-content-center align-items-center flex-d-column center">
                                     <h4>تمام سوالات با موفقیت اضافه شدند</h4>
-                                    <button onclick="window.location.href=window.location.origin" class="btn btn-primary">بازگشت به صفحه اصلی</button>
+                                    <button onclick="window.location.href=window.location.origin+'/professor'" class="btn btn-primary">بازگشت به صفحه اصلی</button>
                                 </div>
                             `);
                     $("#page-title").addClass("d-none");
@@ -94,7 +109,7 @@ function renderQuestionInfo(info) {
                         جواب سوال
                     </div>
                     <div class="order-details__detail__value">
-                        ${ info.answer }
+                        گزینه &nbsp; ${ info.answer }
                     </div>
               </div>
               <div class="order-details__detail col-md-3">
@@ -109,4 +124,5 @@ function renderQuestionInfo(info) {
     `;
 
     $("#questionInfo").html(output);
+    $("#questionInfoModal").modal("show");
 }

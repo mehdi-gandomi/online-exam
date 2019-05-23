@@ -115,16 +115,6 @@ class Exam extends Model
         }
     }
 
-    public static function new_question($post)
-    {
-        try{
-            static::insert("questions",$post);
-            return static::get_last_inserted_id();
-        }catch (\Exception $e){
-            file_put_contents("err.txt",$e->getMessage());
-            return false;
-        }
-    }
 
     protected static function getCurrentDatePersian()
     {
@@ -165,6 +155,25 @@ class Exam extends Model
                 'exam_title'=>$examInfo['name'],
                 'exam_id'=>$examId
             ];
+        }catch (\Exception $e){
+            return false;
+        }
+    }
+
+    public static function get_all_questions_by_id($examId)
+    {
+        try{
+            return static::select("questions","*",['exam_id'=>$examId]);
+        }catch (\Exception $e){
+            return false;
+        }
+    }
+
+    public static function delete_by_id($exam_id)
+    {
+        try{
+            static::delete("exams",['id'=>$exam_id]);
+            return true;
         }catch (\Exception $e){
             return false;
         }

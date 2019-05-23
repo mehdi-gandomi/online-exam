@@ -4,6 +4,7 @@ use App\Models\Professor;
 use Core\Controller;
 use App\Models\Fields;
 use App\Models\Exam;
+use App\Models\Question;
 class ProfessorController extends Controller{
     public function get_study_fields($req,$res,$args)
     {
@@ -97,7 +98,12 @@ class ProfessorController extends Controller{
         $examId=$req->getQueryParam("exam_id");
         $examInfo=Exam::by_id($examId);
         if ($examInfo){
-            return $this->view->render($res,"professor/add-questions.twig",['exam_info'=>$examInfo]);
+            $data=['exam_info'=>$examInfo];
+            $questions=Exam::get_all_questions_by_id($examId);
+            if ($questions && count($questions) == $examInfo['question_count']){
+                $data['is_full']=true;
+            }
+            return $this->view->render($res,"professor/add-questions.twig",$data);
         }
         echo "چنین آزمونی یافت نشد";
     }
@@ -105,7 +111,26 @@ class ProfessorController extends Controller{
     public function save_exam_question($req,$res,$args)
     {
         $body=$req->getParsedBody();
-        $result=Exam::new_question($body);
+        $result=Question::new($body);
         return $result ? $res->withJson(['ok'=>true,'info'=>['id'=>$result,'name'=>$body['title']]]):$res->withJson(['ok'=>false]);
+    }
+
+    public function get_question_info($req,$res,$args)
+    {
+        $qid=$req->getParam("qid");
+        $questionInfo=Question::by_id($qid);
+        return $questionInfo ? $res->withJson(['ok'=>true,'info'=>$questionInfo]):$res->withJson(['ok'=>false]);
+    }
+
+    public function get_exams_page($req,$res,$args)
+    {
+        $exams=Exam::all();
+        return $this->view->render($res,"professor/exams.twig",['exams'=>$exams]);
+    }
+
+    public function delete_exam($req,$res,$args)
+    {
+        $result=Exam::delete_by_id($args['exam_id']);
+        return $result ? $res->withJson(['ok'=>true]):$res->withJson(['ok'=>false]);
     }
 }
