@@ -28,6 +28,8 @@ $app->group('/professor', function ($app) use ($container) {
     $app->post("/new-exam/question/save", "App\Controllers\ProfessorController:save_exam_question");
     $app->get('/exam/json/{exam_id}', "App\Controllers\ProfessorController:get_exam_info");
     $app->get('/exam/questions/show/{exam_id}', "App\Controllers\ProfessorController:get_exam_questions_page");
+    $app->get('/exams/results', "App\Controllers\ProfessorController:get_exams_results_page");
+    $app->get('/exam/results/json/{exam_id}', "App\Controllers\ProfessorController:get_exam_result_json");
 
 })->add($authMV);
 $app->get('/professor/login', "App\Controllers\ProfessorController:get_login_page");

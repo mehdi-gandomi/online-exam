@@ -178,4 +178,28 @@ class Exam extends Model
             return false;
         }
     }
+
+    public static function get_all_exams_results()
+    {
+        try{
+            $db=static::getDB();
+            $sql="SELECT exam_results.id,exam_results.exam_id,exam_results.correct_answers,exam_results.incorrect_answers,exam_results.negative_mark,exam_results.final_mark,exams.name,exams.question_count,exams.has_negative_mark,exams.negative_mark_count,exams.exam_time,exams.exam_mark,exams.exam_coefficient,exams.create_date_persian,exams.is_disabled,study_fields.title AS study_field,users.fname,users.lname,users.username FROM exam_results INNER JOIN exams ON exams.id = exam_results.exam_id INNER JOIN study_fields ON study_fields.id = exams.study_field_id INNER JOIN users ON users.id = exam_results.user_id";
+            $result=$db->query($sql);
+            return $result ? $result->fetchAll(PDO::FETCH_ASSOC):[];
+        }catch (\Exception $e){
+            return [];
+        }
+    }
+    public static function exam_result_by_id($examId)
+    {
+        try{
+            $db=static::getDB();
+            $sql="SELECT exam_results.id,exam_results.exam_id,exam_results.correct_answers,exam_results.incorrect_answers,exam_results.negative_mark,exam_results.final_mark,exams.name,exams.question_count,exams.has_negative_mark,exams.negative_mark_count,exams.exam_time,exams.exam_mark,exams.exam_coefficient,exams.create_date_persian,exams.is_disabled,study_fields.title AS study_field,users.fname,users.lname,users.username FROM exam_results INNER JOIN exams ON exams.id = exam_results.exam_id INNER JOIN study_fields ON study_fields.id = exams.study_field_id INNER JOIN users ON users.id = exam_results.user_id WHERE exam_results.exam_id = :exam_id";
+            $stmt=$db->prepare($sql);
+            $stmt->bindParam(":exam_id",$examId);
+            return $stmt->execute() ? $stmt->fetch(PDO::FETCH_ASSOC):[];
+        }catch (\Exception $e){
+            return [];
+        }
+    }
 }

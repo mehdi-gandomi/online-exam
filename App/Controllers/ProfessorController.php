@@ -148,4 +148,16 @@ class ProfessorController extends Controller{
         }
         echo "چنین آزمونی یافت نشد !";
     }
+
+    public function get_exams_results_page($req,$res,$args)
+    {
+        $results=Exam::get_all_exams_results();
+        return $this->view->render($res,"professor/exams-results.twig",['results'=>$results]);
+    }
+
+    public function get_exam_result_json($req,$res,$args)
+    {
+        $result=Exam::exam_result_by_id($args['exam_id']);
+        return $result ? $res->withJson(['ok'=>true,'info'=>$result]):$res->withJson(['ok'=>false]);
+    }
 }
