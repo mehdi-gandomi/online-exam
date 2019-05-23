@@ -121,7 +121,7 @@ function renderExamInfo(info) {
               </div>
        </div>
        <div class="d-flex justify-content-center mt-4">
-            <a href="/user/exam-result/${info.exam_id}" class="btn btn-success">مشاهده جواب های شما</a>
+            <a href="/user/exam/question-answers/${info.exam_id}" class="btn btn-success">مشاهده جواب های شما</a>
             <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">بستن</button>
        </div>
     `;

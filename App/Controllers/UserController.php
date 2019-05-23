@@ -102,4 +102,11 @@ class UserController extends Controller{
         unset($_COOKIE[\session_name()]);
         return $res->withRedirect('/');
     }
+
+    public function get_question_answers_page($req,$res,$args)
+    {
+        $questions=Exam::get_user_question_answers_by_exam_id($args['exam_id'],$_SESSION['user_id']);
+        $examInfo=Exam::by_id($args['exam_id']);
+        return $this->view->render($res,"user/question-answers.twig",['questions'=>$questions,'exam_title'=>$examInfo['name']]);
+    }
 }

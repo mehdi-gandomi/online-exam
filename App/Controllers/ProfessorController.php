@@ -166,6 +166,7 @@ class ProfessorController extends Controller{
         $examId=$req->getParam("exam_id");
         $userId=$req->getParam("user_id");
         $questions=Exam::get_user_question_answers_by_exam_id($examId,$userId);
-        return $this->view->render($res,"professor/user-question-answers.twig",['questions'=>$questions]);
+        $examInfo=Exam::by_id($examId);
+        return $this->view->render($res,"professor/user-question-answers.twig",['questions'=>$questions,'exam_title'=>$examInfo['name']]);
     }
 }
