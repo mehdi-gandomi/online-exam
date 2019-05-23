@@ -122,28 +122,20 @@ function renderExamInfo(info) {
               
        </div>
        <div class="d-flex justify-content-center mt-4">
+            <a href="/professor/exam/questions/show/${info.id}" class="btn btn-success">مشاهده سوالات ازمون</a>
+            <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">بستن</button>     
+       </div>
     `;
-    if (info.disabled === '1') {
-        output+=`
-            <button class="btn btn-secondary" style="cursor: not-allowed">شروع ازمون</button>
-            <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">بستن</button>
-        `;
-    }else{
-        output+=`
-            <a href="/user/exam/${info.id}" class="btn btn-success">شروع ازمون</a>
-            <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">بستن</button>
-        `;
-    }
+
     output+="</div>";
     $("#examDetails").html(output);
     $("#examDetailsModal").modal("show");
 }
 
 function showExamInfo(examId) {
-    $.get("/user/exam/json/"+examId,function (data,status) {
+    $.get("/professor/exam/json/"+examId,function (data,status) {
         if (data.ok){
             renderExamInfo(data.info);
-
         }
     })
 }

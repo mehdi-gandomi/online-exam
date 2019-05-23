@@ -1,0 +1,46 @@
+{% extends 'layout/professor.twig' %}
+{% block style_below %}
+    <style>
+        .is-answer{
+            color: #4ae04a;
+        }
+        .auto-incr-form:before{
+            top: 117px !important;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mt-4 mb-5">
+                <h4 class="text-center ">
+                    {{ exam_title }}
+                </h4>
+                <a href="/professor" class="btn btn-primary">بازگشت به صفحه اصلی</a>
+            </div>
+            <form method="post" action="/user/exam/save" class="auto-incr-form">
+                <input type="hidden" name="exam_id" value="{{ exam_id }}">
+                {% for question in questions %}
+                    <div class="row step">
+                        <div class="col-12">
+                            <h5>{{ question.title }}</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="{{ question.answer == '1' ? "is-answer":"" }}">الف ) &nbsp; {{ question.option1 }}</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="{{ question.answer == '2' ? "is-answer":"" }}">ب ) &nbsp; {{ question.option2 }}</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="{{ question.answer == '3' ? "is-answer":"" }}">د ) &nbsp; {{ question.option3 }}</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="{{ question.answer == '4' ? "is-answer":"" }}">ه ) &nbsp; {{ question.option4 }}</h5>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

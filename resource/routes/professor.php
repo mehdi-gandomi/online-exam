@@ -26,6 +26,9 @@ $app->group('/professor', function ($app) use ($container) {
     $app->get('/exams', "App\Controllers\ProfessorController:get_exams_page");
     $app->delete('/exam/{exam_id}', "App\Controllers\ProfessorController:delete_exam");
     $app->post("/new-exam/question/save", "App\Controllers\ProfessorController:save_exam_question");
+    $app->get('/exam/json/{exam_id}', "App\Controllers\ProfessorController:get_exam_info");
+    $app->get('/exam/questions/show/{exam_id}', "App\Controllers\ProfessorController:get_exam_questions_page");
+
 })->add($authMV);
 $app->get('/professor/login', "App\Controllers\ProfessorController:get_login_page");
 $app->post('/professor/login', "App\Controllers\ProfessorController:post_login");

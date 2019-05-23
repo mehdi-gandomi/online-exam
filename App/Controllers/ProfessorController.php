@@ -133,4 +133,19 @@ class ProfessorController extends Controller{
         $result=Exam::delete_by_id($args['exam_id']);
         return $result ? $res->withJson(['ok'=>true]):$res->withJson(['ok'=>false]);
     }
+    public function get_exam_info($req,$res,$args)
+    {
+        $examInfo=Exam::by_id($args['exam_id']);
+        return $examInfo ? $res->withJson(['ok'=>true,'info'=>$examInfo]):['ok'=>false];
+    }
+
+    public function get_exam_questions_page($req,$res,$args)
+    {
+        $questions=Exam::get_questions_by_exam_id($args['exam_id']);
+        $examInfo=Exam::by_id($args['exam_id']);
+        if ($questions){
+            return $this->view->render($res,"professor/show-exam-questions.twig",['questions'=>$questions,'exam_title'=>$examInfo['name']]);
+        }
+        echo "چنین آزمونی یافت نشد !";
+    }
 }
